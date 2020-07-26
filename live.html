@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>旋转木马轮播图</title>
+    <style>
+        /*初始化  reset*/
+        blockquote,
+        body,
+        button,
+        dd,
+        dl,
+        dt,
+        fieldset,
+        form,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        hr,
+        input,
+        legend,
+        li,
+        ol,
+        p,
+        pre,
+        td,
+        textarea,
+        th,
+        ul {
+            margin: 0;
+            padding: 0
+        }
+
+        body,
+        button,
+        input,
+        select,
+        textarea {
+            font: 12px/1.5 "Microsoft YaHei", "微软雅黑", SimSun, "宋体", sans-serif;
+            color: #666;
+        }
+
+        ol,
+        ul {
+            list-style: none
+        }
+
+        a {
+            text-decoration: none
+        }
+
+        fieldset,
+        img {
+            border: 0;
+            vertical-align: top;
+        }
+
+        a,
+        input,
+        button,
+        select,
+        textarea {
+            outline: none;
+        }
+
+        a,
+        button {
+            cursor: pointer;
+        }
+
+        .wrap {
+            width: 1200px;
+            margin: 100px auto;
+            /* border: 1px solid red; */
+        }
+
+        .wrap:hover .arrow {
+            display: block;
+        }
+
+        .slide {
+            height: 500px;
+            position: relative;
+        }
+
+        .slide li {
+            position: absolute;
+            left: 200px;
+            top: 0;
+        }
+
+        .slide li img {
+            width: 100%;
+            /*让图片的大小和父盒子一样的大，要不然会出问题，会撑出父盒子*/
+        }
+
+        .arrow {
+            display: none;
+        }
+
+        .prev,
+        .next {
+            width: 76px;
+            height: 112px;
+            position: absolute;
+            top: 50%;
+            margin-top: -56px;
+            /*background-color: red;*/
+            background: url(images/rotate/prev.png) no-repeat;
+            z-index: 99;
+        }
+
+        .next {
+            right: 0;
+            background-image: url(images/rotate/next.png);
+        }
+
+
+        .slide .one {
+            width: 500px;
+            top: -60px;
+            left: 200px;
+            opacity: 0.2;
+            z-index: 2
+        }
+
+        .slide .two {
+            width: 500px;
+            top: -20px;
+            left: 100px;
+            opacity: 0.4;
+            z-index: 3
+        }
+
+        .slide .three {
+            width: 500px;
+            top: 20px;
+            left: -20px;
+            opacity: 0.6;
+            z-index: 4
+        }
+
+        .slide .four {
+            width: 550px;
+            top: 50px;
+            left: 130px;
+            opacity: 0.8;
+            z-index: 5
+        }
+
+        .slide .five {
+            width: 700px;
+            top: 100px;
+            left: 260px;
+            opacity: 1;
+            z-index: 6
+        }
+
+        .slide .six {
+            width: 600px;
+            top: 70px;
+            left: 500px;
+            opacity: 0.9;
+            z-index: 5;
+        }
+
+        .slide .seven {
+            width: 550px;
+            top: 30px;
+            left: 650px;
+            opacity: 0.7;
+            z-index: 4;
+
+        }
+
+        .slide .eight {
+            width: 500px;
+            top: -10px;
+            left: 650px;
+            opacity: 0.5;
+            z-index: 3;
+
+        }
+
+        .slide .nine {
+            width: 500px;
+            top: -50px;
+            left: 550px;
+            opacity: 0.3;
+            z-index: 2;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap" id="wrap">
+        <div class="slide" id="slide">
+            <ul>
+                <li class="one"><a href="javascript:;"><img src="./images/timg (1).jpg" alt="" /></a></li>
+                <li class="two"><a href="javascript:;"><img src="images/timg (2).jpg" alt="" /></a></li>
+                <li class="three"><a href="javascript:;"><img src="images/timg (3).jpg" alt="" /></a></li>
+                <li class="four"><a href="javascript:;"><img src="images/timg (4).jpg" alt="" /></a></li>
+                <li class="five"><a href="javascript:;"><img src="images/timg(5).jpg" alt="" /></a></li>
+                <li class="six"><a href="javascript:;"><img src="images/timg(6).jpg" alt="" /></a></li>
+                <li class="seven"><a href="javascript:;"><img src="images/timg.jpg" alt="" /></a></li>
+                <li class="eight"><a href="javascript:;"><img src="images/timg(7).jpg" alt="" /></a></li>
+                <li class="nine"><a href="javascript:;"><img src="images/timg(8).jpg" alt="" /></a></li>
+            </ul>
+            <div class="arrow" id="arrow">
+                <a href="javascript:;" class="prev" id="arrLeft"></a>
+                <a href="javascript:;" class="next" id="arrRight"></a>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/jquery-1.12.4.js"></script>
+
+    <script>
+
+        /* 
+        旋转木马核心原理 ： li元素交换样式
+            下一页 ： 数组最后一个元素 移动到最前面
+            上一页 ： 数组第一个元素  移动到最后面
+
+        */
+        //0.将每一个元素样式放入数组中
+        var config = [
+            {
+                "zIndex": 2,
+                "width": 500,
+                "top": -60,
+                "left": 200,
+                "opacity": 0.2,
+            },//0
+            {
+                "zIndex": 3,
+                "width": 500,
+                "top": -20,
+                "left": 100,
+                "opacity": 0.4,
+            },//1
+            {
+                "zIndex": 4,
+                "width": 500,
+                "top": 20,
+                "left": -20,
+                "opacity": 0.6,
+            },//2
+            {
+                "zIndex": 5,
+                "width": 550,
+                "top": 50,
+                "left": 130,
+                "opacity": 0.8,
+            },//3
+            {
+                "zIndex": 6,
+                "width": 700,
+                "top": 100,
+                "left": 260,
+                "opacity": 1,
+            },//4
+            {
+                "zIndex": 5,
+                "width": 600,
+                "top": 70,
+                "left": 500,
+                "opacity": 0.9,
+            },//5
+            {
+                "zIndex": 4,
+                "width": 550,
+                "top": 30,
+                "left": 650,
+                "opacity": 0.7,
+            },//6
+            {
+                "zIndex": 3,
+                "width": 500,
+                "top": -10,
+                "left": 650,
+                "opacity": 0.5,
+            },//8
+            {
+                "zIndex": 2,
+                "width": 500,
+                "top": -50,
+                "left": 550,
+                "opacity": 0.3,
+            }//9
+        ];
+        console.log(config);
+
+
+        /*复习：数组元素移动 
+        下一页 ： 数组最后一个元素 移动到最前面
+        上一页 ： 数组第一个元素  移动到最后面
+
+        arr.push()  : 往数组后面添加元素
+        arr.pop()  :  删除数组最后一个元素 (返回被删除的元素)
+        arr.shift():  删除数组第一个元素  (返回被删除的元素)
+        arr.unshift():  往数组开头添加元素 
+        */
+
+
+        //下一页 ： 
+        $('#arrRight').click(function () {
+            //1.数组最后一个元素 移动到最前面
+            config.unshift(config.pop());
+            //2.逐一动画修改样式
+            for (var i = 0; i < $('#slide li').length; i++) {
+                $('#slide li').eq(i).stop(true, false).animate(config[i]);
+            }
+        });
+
+        //上一页 ： 
+        $('#arrLeft').click(function () {
+            //1.数组第一个元素 移动到最后面
+            config.push(config.shift());
+            //2.逐一动画修改样式
+            for (var i = 0; i < $('#slide li').length; i++) {
+                $('#slide li').eq(i).stop(true, false).animate(config[i]);
+            }
+        });
+
+
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>
