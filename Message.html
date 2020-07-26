@@ -1,11 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/Message.css">
 </head>
+
 <body>
-    <h1>这是留言页面</h1>
+    <div class="mian w clearfix">
+        <div class="head"><img src="./images/purebelle6.gif" alt=""></div>
+        <div class="leave">
+            <div class="lev_top">
+                <span>留言人 : </span><input class="txt" type="text" placeholder="请输入您的昵称">
+            </div>
+            <div class="lev_btm">
+                <span>您想说的话 : </span>
+                <div class="commt_box">
+                    <textarea name="留言区" id="text" cols="80" rows="26" style="resize:none"
+                        placeholder="说说您的心里话吧"></textarea>
+                </div>
+            </div>
+            <button id="btn">发布留言</button>
+        </div>
+    </div>
 </body>
+
 </html>

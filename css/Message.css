@@ -1,0 +1,83 @@
+.w {
+    width: 1200px;
+    margin: 0 auto;
+}
+.mian {
+    height: 770px;
+    padding-top: 50px;
+}
+.head {
+    float: left;
+    width: 25%;
+    height: 100%;
+    margin-right: 5%;
+}
+.head img {
+    width: 100%;
+    height: 255px;
+    background-color:orange;
+}
+.leave {
+    position: relative;
+    float: left;
+    width: 70%;
+    height: 100%;
+   
+}
+.leave .lev_top {
+    width: 100%;
+    height: 50px;
+    margin-bottom: 20px;
+}
+.leave .lev_top span {
+    width: 20%;
+    font-size: 22px;
+    font-weight: 700;
+    color: orange;
+}
+.leave .lev_top .txt {
+    width: 33%;
+    height: 80%;
+    border: 3px solid green;
+}
+.leave .lev_btm {
+    position: relative;
+    width: 100%;
+}
+.leave .lev_btm span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20%;
+    font-size: 22px;
+    font-weight: 700;
+    color: orange;
+
+}
+.leave .lev_btm .commt_box {
+    position: absolute;
+    width: 80%;
+    height: 550px;
+    top: 28px;
+    left: 0;
+    border: 10px solid red;
+    border-width:208px 134px 68px 52px;
+    border-image: url('../images/rotate/bgi.png') 208 134 68 52 round;
+}
+.leave .lev_btm .commt_box #text {
+    position: absolute;
+    top: -120px;
+}
+
+#btn {
+    position: absolute;
+    bottom: 0px;
+    right: 178px;
+    width: 200px;
+    height: 50px;
+    color: green;
+    border-radius: 25px;
+    font-size: 22px;
+    font-weight: 700;
+    background-color: orange;
+}
